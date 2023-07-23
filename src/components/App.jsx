@@ -36,15 +36,6 @@ getFilteredContacts = () => {
   );
 };
 
-// getFilteredContacts = () => {
-//   const { filter, contacts } = this.state;
-//   // const normalizedFilter = filter.toLowerCase();
-
-//   return contacts.filter(contact =>
-//     contact.data.name.includes(filter),
-//   );
-// };
-
 handleDelete = contactId => {
   this.setState(({contacts}) => ({
     contacts: contacts.filter(({id}) => id !== contactId),

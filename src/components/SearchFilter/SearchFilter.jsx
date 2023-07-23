@@ -3,7 +3,6 @@ import {Input} from './SearchFilter.styled'
 
 export const SearchFilter = ({value, onChange }) => {
     return (
-      
     <>
       <Input type="text" 
       value={value}
