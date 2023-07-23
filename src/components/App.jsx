@@ -43,7 +43,7 @@ handleDelete = contactId => {
 }
 
   render() {
-    const {contacts, filter} = this.state;
+    const {filter} = this.state;
     const filteredContacts = this.getFilteredContacts();
     return (
       <Container>
