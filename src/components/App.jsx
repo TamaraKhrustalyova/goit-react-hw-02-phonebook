@@ -3,6 +3,7 @@ import { ContactForm } from './ContactForm/ContactForm';
 import {SearchFilter} from './SearchFilter/SearchFilter';
 import { ContactList } from './ContactList/ContactList';
 import { nanoid } from 'nanoid'
+import {Container, ContactTitle, PhonebookTitle, SubTitle} from './App.styled'
 
 export class App extends Component {
   state = {
@@ -13,7 +14,8 @@ export class App extends Component {
 formSubmitHandler = (data) => {
   const {name} = data;
   const {contacts} = this.state;
-    if (contacts.find(contact => contact.name === name)) {
+  console.log(data, contacts);
+    if (contacts.find((contact) => contact.data.name === name)) {
       return alert (`Contact ${name} already exists`);
     }
   this.setState({contacts: [{id: nanoid(), data}, ...contacts]});
@@ -25,23 +27,23 @@ filterHandler = e => {
   this.setState({ filter: e.currentTarget.value });
 }
 
-// getFilteredContacts = () => {
-//   const { filter, contacts } = this.state;
-//   const normalizedFilter = filter.toLowerCase();
-
-//   return contacts.filter(({name}) =>
-//     name.toLowerCase().includes(normalizedFilter),
-//   );
-// };
-
 getFilteredContacts = () => {
   const { filter, contacts } = this.state;
-  // const normalizedFilter = filter.toLowerCase();
+  const normalizedFilter = filter.toLowerCase();
 
-  return contacts.filter(contact =>
-    contact.name.includes(filter),
+  return contacts.filter(({data}) =>
+    data.name.toLowerCase().includes(normalizedFilter),
   );
 };
+
+// getFilteredContacts = () => {
+//   const { filter, contacts } = this.state;
+//   // const normalizedFilter = filter.toLowerCase();
+
+//   return contacts.filter(contact =>
+//     contact.data.name.includes(filter),
+//   );
+// };
 
 handleDelete = contactId => {
   this.setState(({contacts}) => ({
@@ -51,34 +53,26 @@ handleDelete = contactId => {
 
   render() {
     const {contacts, filter} = this.state;
-    // const filteredContacts = this.getFilteredContacts();
+    const filteredContacts = this.getFilteredContacts();
     return (
-      <div style={{
-        display: 'block',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: '20px',
-        color: '#010101',
-      }}>
-        <>
-          <h1>Phonebook</h1>
+      <Container>
+          <PhonebookTitle>Phonebook</PhonebookTitle>
           <ContactForm onFormSubmit={this.formSubmitHandler}/>
 
-          <h2>Contacts</h2>
+          <ContactTitle>Contacts</ContactTitle>
 
-          <h3>Find contact by name</h3>
+          <SubTitle>Find contact by name</SubTitle>
           <SearchFilter 
           value={filter} 
           onChange={this.filterHandler}
           />
 
           <ContactList 
-          contacts={contacts}
-          // contacts={filteredContacts}
+          // contacts={contacts}
+          contacts={filteredContacts}
           deleteContact={this.handleDelete} 
-          />
-        </>
-      </div>
+          />     
+      </Container>
     )
   }
 };

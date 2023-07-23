@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
+import {Input} from './SearchFilter.styled'
 
 export const SearchFilter = ({value, onChange }) => {
     return (
+      
     <>
-      <input type="text" 
+      <Input type="text" 
       value={value}
       onChange={onChange}/>
     </>
